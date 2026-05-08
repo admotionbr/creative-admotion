@@ -135,7 +135,7 @@ creatives.forEach((c,i)=>{
   grid.innerHTML+=`<div class="card" id="c${i}">
     <div class="frame-wrap">
       <div class="creative-frame">
-        <iframe src="${c.folder}/index.html" title="${c.name}" loading="lazy"></iframe>
+        <iframe src="${c.folder}/index.html" scrolling="no" style="overflow:hidden;" title="${c.name}" loading="lazy"></iframe>
       </div>
     </div>
     <div class="card-body">
