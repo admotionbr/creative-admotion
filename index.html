@@ -9,7 +9,7 @@
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;}
 .wrap{background:linear-gradient(135deg,#000 0%,#002b1a 40%,#004d2b 70%,#00693c 100%);min-height:100vh;padding:2.5rem 1.5rem;}
 .header{text-align:center;margin-bottom:2.5rem;}
-.logo-img{height:48px;width:auto;margin-bottom:1.25rem;filter:brightness(1);}
+.logo-img{height:48px;width:auto;margin-bottom:1.25rem;}
 .header h1{font-size:22px;font-weight:500;color:#fff;margin-bottom:6px;letter-spacing:-0.01em;}
 .header p{font-size:14px;color:rgba(255,255,255,0.5);}
 .status-bar{display:flex;justify-content:center;align-items:center;gap:24px;margin-bottom:2rem;}
@@ -26,13 +26,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;}
 .frame-wrap{display:flex;justify-content:center;padding:1rem 1rem 0;}
 .creative-frame{width:300px;height:250px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .creative-frame iframe{width:300px;height:250px;border:none;display:block;}
-.placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,0.2);}
-.placeholder svg{width:28px;height:28px;opacity:.4;}
-.placeholder span{font-size:11px;font-family:monospace;}
 .card-body{padding:1rem;}
-.title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-.card-name{font-size:14px;font-weight:500;color:rgba(255,255,255,0.9);}
-.size-tag{font-size:11px;background:rgba(33,221,102,0.1);color:#21dd66;border:1px solid rgba(33,221,102,0.2);border-radius:20px;padding:2px 9px;}
+.title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px;}
+.card-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.9);flex:1;}
+.size-tag{font-size:11px;background:rgba(33,221,102,0.1);color:#21dd66;border:1px solid rgba(33,221,102,0.2);border-radius:20px;padding:2px 9px;white-space:nowrap;}
 .status-pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;border-radius:20px;padding:3px 10px;margin-bottom:10px;}
 .status-pill.pending{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.08);}
 .status-pill.approved{background:rgba(33,221,102,0.1);color:#21dd66;border:1px solid rgba(33,221,102,0.22);}
@@ -87,33 +84,32 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;}
   </div>
 </div>
 <script>
-const names=[
-  "Banner 01 — Hero Principal",
-  "Banner 02 — Produto Destaque",
-  "Banner 03 — Oferta Especial",
-  "Banner 04 — Institucional",
-  "Banner 05 — Sazonalidade",
-  "Banner 06 — Retargeting",
-  "Banner 07 — Variação A/B",
-  "Banner 08 — Linha Premium",
-  "Banner 09 — Lançamento",
-  "Banner 10 — Fechamento"
+const creatives=[
+  {folder:"Coristina-D_Choveu_300x250",    name:"Choveu"},
+  {folder:"Coristina-D_Frio_300x250",       name:"Frio"},
+  {folder:"Coristina-D_Generico_300x250",   name:"Genérico"},
+  {folder:"Coristina-D_Pegou-Chuva_300x250",name:"Pegou Chuva"},
+  {folder:"Coristina-D_Raphinha_Choveu_300x250",    name:"Raphinha — Choveu"},
+  {folder:"Coristina-D_Raphinha_Frio_300x250",       name:"Raphinha — Frio"},
+  {folder:"Coristina-D_Raphinha_Generico_300x250",   name:"Raphinha — Genérico"},
+  {folder:"Coristina-D_Raphinha_Pegou-Chuva_300x250",name:"Raphinha — Pegou Chuva"},
+  {folder:"Coristina-D_Raphinha_Virou_300x250",      name:"Raphinha — Virou"},
+  {folder:"Coristina-D_Virou_300x250",               name:"Virou"}
 ];
-const st=names.map(()=>({s:"pending",obs:""}));
-function pad(n){return n<9?"0"+(n+1):""+(n+1);}
+const st=creatives.map(()=>({s:"pending",obs:""}));
 function stats(){
   document.getElementById("n-ok").textContent=st.filter(x=>x.s==="approved").length;
   document.getElementById("n-fix").textContent=st.filter(x=>x.s==="rejected").length;
 }
 function summary(){
   const lines=["📋 VALIDAÇÃO DE CRIATIVOS — CORISTINA D","Formato: 300×250px",""];
-  names.forEach((n,i)=>{
+  creatives.forEach((c,i)=>{
     const ic=st[i].s==="approved"?"✅":st[i].s==="rejected"?"❌":"⏳";
-    lines.push(ic+" "+n);
+    lines.push(ic+" "+c.name);
     if(st[i].s==="rejected"&&st[i].obs)lines.push("   → Ajuste: "+st[i].obs);
   });
   lines.push("");
-  lines.push("Total: "+names.length+" | ✅ "+st.filter(x=>x.s==="approved").length+" aprovados | ❌ "+st.filter(x=>x.s==="rejected").length+" com ajuste | ⏳ "+st.filter(x=>x.s==="pending").length+" pendentes");
+  lines.push("Total: "+creatives.length+" | ✅ "+st.filter(x=>x.s==="approved").length+" aprovados | ❌ "+st.filter(x=>x.s==="rejected").length+" com ajuste | ⏳ "+st.filter(x=>x.s==="pending").length+" pendentes");
   document.getElementById("sum").textContent=lines.join("\n");
 }
 function render(i){
@@ -135,15 +131,15 @@ function toggleFix(i){const f=document.getElementById("rf"+i);f.classList.toggle
 function confirmFix(i){const obs=document.getElementById("rf"+i).querySelector("textarea").value.trim();st[i]={s:"rejected",obs};render(i);stats();summary();}
 function copy(){navigator.clipboard.writeText(document.getElementById("sum").textContent).then(()=>{const b=document.querySelector(".btn-copy");b.textContent="✅ Copiado!";setTimeout(()=>b.textContent="📋 Copiar resumo",2000);});}
 const grid=document.getElementById("grid");
-names.forEach((name,i)=>{
+creatives.forEach((c,i)=>{
   grid.innerHTML+=`<div class="card" id="c${i}">
     <div class="frame-wrap">
       <div class="creative-frame">
-        <iframe src="criativo-${pad(i)}/index.html" title="${name}" loading="lazy"></iframe>
+        <iframe src="${c.folder}/index.html" title="${c.name}" loading="lazy"></iframe>
       </div>
     </div>
     <div class="card-body">
-      <div class="title-row"><span class="card-name">${name}</span><span class="size-tag">300×250</span></div>
+      <div class="title-row"><span class="card-name">${c.name}</span><span class="size-tag">300×250</span></div>
       <span class="status-pill pending">⏳ Aguardando revisão</span>
       <div class="obs-box"><div class="obs-label">Ajuste solicitado</div><div class="obs-text"></div></div>
       <div class="btn-row">
