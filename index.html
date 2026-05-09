@@ -24,8 +24,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#000;}
 .card.approved{border-color:rgba(33,221,102,0.5);}
 .card.rejected{border-color:rgba(255,92,92,0.5);}
 .frame-wrap{display:flex;justify-content:center;padding:1rem 1rem 0;}
-.creative-frame{width:300px;height:250px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.creative-frame iframe{width:300px;height:250px;border:none;display:block;}
+.creative-frame{width:300px;height:250px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;zoom:reset;}
+.creative-frame iframe{width:300px;height:250px;border:none;display:block;transform:scale(1);transform-origin:top left;}
 .card-body{padding:1rem;}
 .title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px;}
 .card-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.9);flex:1;}
@@ -135,7 +135,7 @@ creatives.forEach((c,i)=>{
   grid.innerHTML+=`<div class="card" id="c${i}">
     <div class="frame-wrap">
       <div class="creative-frame">
-        <iframe src="${c.folder}/index.html" scrolling="no" style="overflow:hidden;" title="${c.name}" loading="lazy"></iframe>
+        <iframe src="${c.folder}/index.html" title="${c.name}" loading="lazy" scrolling="no" style="overflow:hidden;transform-origin:top left;transform:scale(1);zoom:1;"></iframe>
       </div>
     </div>
     <div class="card-body">
